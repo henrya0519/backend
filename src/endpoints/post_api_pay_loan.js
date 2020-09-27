@@ -1,0 +1,83 @@
+'use strict';
+const assert = require( 'assert' );
+const UTIL = require.main.require( './util' );
+const COLLECTION_USER = require('../db/collections/loan');
+
+
+///////////////////////////////////////////////////////////////////////////////////
+///// PROMISIFY  METHODS //////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+
+
+var pay_loan = (args, succes, fail) => {
+    COLLECTION_USER.updateOne({Id: args.Id},{Pago:'Si'})
+        .then(result => {
+          
+            succes(result);
+
+        })
+        .catch(error => {
+
+            fail(error);
+        })
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+///// MAIN ENDPOINT HANDLER  METHOD ///////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+var main_request_handler = ( req, res, next ) => {
+
+	let _ = {
+		...req.body
+    }
+ 
+
+	
+	UTIL.promisify(pay_loan,_)
+	.then (resp =>{
+        
+        UTIL.response_success(req,res,resp);
+       
+
+    })
+	.catch( error => {
+		UTIL.response_error( req, res, error );
+
+	})
+	
+	//UTIL.response_success(req,res,{cmd:'hola'});
+	
+
+	
+
+};
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+///// MODULE EXPORTS //////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+module.exports = {
+	main: ( req, res, next) => {
+		let method = main_request_handler;
+		UTIL.main_request_handler( method, req, res, next);
+	}
+};
