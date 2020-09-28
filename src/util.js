@@ -13,7 +13,7 @@ exports.log = ( data ) =>{
 exports.response_error = ( req, res, error ) => {
 	let http_code = 500;
 
-	console.error( `\nRESPONSE ERROOOOOOOOOOOOOOOOOOOOR` );
+	
 	console.error( http_code );
 	console.error( error );
 

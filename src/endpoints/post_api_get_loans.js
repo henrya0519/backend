@@ -15,9 +15,7 @@ var find_loans = (args, succes, fail) => {
 
     COLLECTION_USER.find({Cedula: args.Cedula})
         .then(result => {
-            console.log('Result: ', result);
             succes(result);
-
         })
         .catch(error => {
 
@@ -51,13 +49,6 @@ var send_data = (args, succes, fail) => {
 }
 
 
-
-
-
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////
 ///// MAIN ENDPOINT HANDLER  METHOD ///////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +63,6 @@ var main_request_handler = ( req, res, next ) => {
 	UTIL.promisify(find_loans,_)
 	.then (loans =>{
         _.loans = loans 
-        //UTIL.response_success(req,res,fuser);
         return UTIL.promisify(send_data, _);;
 
     })
@@ -85,11 +75,6 @@ var main_request_handler = ( req, res, next ) => {
 		UTIL.response_error( req, res, error );
 
 	})
-	
-	//UTIL.response_success(req,res,{cmd:'hola'});
-	
-
-	
 
 };
 

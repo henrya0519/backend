@@ -8,7 +8,7 @@ const COLLECTION_USER = require('../db/collections/createuser');
 ///////////////////////////////////////////////////////////////////////////////////
 
 var find_user =(args,succes,fail) =>{
-	console.log('Find User: ', args);
+	
 	COLLECTION_USER.findOne({Cedula:args.Cedula})
 	.then( result =>{
         
@@ -31,7 +31,7 @@ var main_request_handler = ( req, res, next ) => {
 		...req.body
 	}
 
-	
+
 	UTIL.promisify(find_user,_)
 	.then (fuser =>{
 		UTIL.response_success(req,res,fuser);
@@ -41,16 +41,9 @@ var main_request_handler = ( req, res, next ) => {
 		UTIL.response_error( req, res, error );
 
 	})
-	
-	//UTIL.response_success(req,res,{cmd:'hola'});
-	
 
-	
 
 };
-
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////

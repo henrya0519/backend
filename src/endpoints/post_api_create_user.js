@@ -11,7 +11,7 @@ const COLLECTION_USER = require('../db/collections/createuser');
 
 var creater_user =(args,succes,fail) =>{
 	
-        console.log('args create user:', args);
+        
 		const insert =new COLLECTION_USER({
 			Nombre: args.Nombre,
 			Apellidos:args.Apellidos,

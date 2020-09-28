@@ -7,7 +7,7 @@ const COLLECTION_USER = require('../db/collections/loan');
 ///// PROMISIFY  METHODS //////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
 var insert_loan = (args, succes, fail) => {
-    console.log('Args Insert:', args);
+   
     const insert = new COLLECTION_USER({
         Cedula: args.Cedula,
         Fecha: args.Fecha,
@@ -57,7 +57,7 @@ var find_declined_loan_ = (args, succes, fail) => {
 
     switch (args.loan) {
         case 'Existe':
-            console.log('Usuario existe', args);
+           
             COLLECTION_USER.find({
                     Cedula: args.Cedula,
                     Estado: 'Rechazado'
@@ -65,7 +65,7 @@ var find_declined_loan_ = (args, succes, fail) => {
                 .then(result => {
 
                     if (result.length >= 1 && result[0].Estado === 'Rechazado') {
-                        console.log('Rechazado, este usuario no puede hacer mas creditos: ', result);
+                        
                         succes('Rechazado');
                     } else {
 
@@ -106,7 +106,7 @@ var verify_loan_ = (args, succes, fail) => {
                 .then(result => {
 
                     if (result.length >= 1) {
-                        console.log('La persona no ha pagado el prestamo', result);
+                        
                         args.Estado = 'NoPago'
                         UTIL.promisify(insert_loan, args)
                             .then(result => {
@@ -120,7 +120,7 @@ var verify_loan_ = (args, succes, fail) => {
 
                     } 
                     else {
-                        console.log('La persona esta al dia', result);
+                       
                         args.Estado = 'Aprobado'
                         UTIL.promisify(insert_loan, args)
                             .then(result => {
@@ -198,7 +198,6 @@ var main_request_handler = (req, res, next) => {
         .then(loan => {
             _.loan = loan;
             return UTIL.promisify(find_declined_loan_, _);;
-            //UTIL.response_success(req,res,fuser);
         })
         .then(status => {
             _.status = status;
@@ -213,11 +212,6 @@ var main_request_handler = (req, res, next) => {
             UTIL.response_error(req, res, error);
 
         })
-
-    //UTIL.response_success(req,res,{cmd:'hola'});
-
-
-
 
 };
 

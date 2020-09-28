@@ -1,11 +1,6 @@
 'use strict';
 
-
-
-
 global.__ = {};
-
-
 
 __.NAME = 'ms_mlm_bulkload';
 __.PORT = parseInt( process.env.PORT );
